@@ -7,4 +7,14 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2022,
   },
+  overrides: [
+    {
+      files: ["*.pug"],
+      parser: "pug-eslint-parser",
+      plugins: ["pug"],
+      rules: {
+        // Configure Pug-specific rules if needed
+      },
+    },
+  ],
 };
