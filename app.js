@@ -25,7 +25,7 @@ app.use(methodOverride());
 
 // Initialize the prismic.io api
 const initApi = (req) => {
-  return Prismic.getApi(process.env.PRISMIC_ENDPOINT, {
+  return Prismic.client(process.env.PRISMIC_ENDPOINT, {
     accessToken: process.env.PRISMIC_ACCESS_TOKEN,
     req,
   });
