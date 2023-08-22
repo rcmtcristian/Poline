@@ -131,3 +131,11 @@ dist
 
 # webpack build output
 public/
+
+
+// scss
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map
+*.css

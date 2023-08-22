@@ -1,31 +1,3 @@
-dg.ac {
-  z-index: 99999 !important;
-}
-
-@font-face {
-  font-family: "George X";
-  src: url("../fonts/george_x-webfont.woff2") format("woff2"), url("../fonts/george_x-webfont.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Suisse BP";
-  src: url("../fonts/suissebpintl-light-webfont.woff2") format("woff2"), url("../fonts/suissebpintl-light-webfont.woff") format("woff");
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Suisse BP";
-  src: url("../fonts/suissebpintl-regular-webfont.woff2") format("woff2"), url("../fonts/suissebpintl-regular-webfont.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Suisse BP";
-  src: url("../fonts/suissebpintl-ultralight-webfont.woff2") format("woff2"), url("../fonts/suissebpintl-ultralight-webfont.woff") format("woff");
-  font-weight: 200;
-  font-style: normal;
-}
 html,
 body,
 div,
@@ -156,7 +128,3 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
-body {
-  font-family: "Suisse BP";
-}/*# sourceMappingURL=index.css.map */

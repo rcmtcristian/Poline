@@ -1,0 +1,65 @@
+@font-face {
+  font-family: $font-george-x;
+  src: url("../fonts/george_x-webfont.woff2") format("woff2"),
+    url("../fonts/george_x-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: $font-suisse-bp;
+  src: url("../fonts/suissebpintl-light-webfont.woff2") format("woff2"),
+    url("../fonts/suissebpintl-light-webfont.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: $font-suisse-bp;
+  src: url("../fonts/suissebpintl-regular-webfont.woff2") format("woff2"),
+    url("../fonts/suissebpintl-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: $font-suisse-bp;
+  src: url("../fonts/suissebpintl-ultralight-webfont.woff2") format("woff2"),
+    url("../fonts/suissebpintl-ultralight-webfont.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+}
+
+//
+// @font-face {
+//   font-family: $font-george-x;
+//   src: url("../../fonts/george_x-webfont.woff2") format("woff2"),
+//     url("../../fonts/george_x-webfont.woff") format("woff");
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: $font-suisse-bp;
+//   src: url("../../app/fonts/suissebpintl-light-webfont.woff2") format("woff2"),
+//     url("../../app/fonts/suissebpintl-light-webfont.woff") format("woff");
+//   font-weight: 300;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: $font-suisse-bp;
+//   src: url("../../app/fonts/suissebpintl-regular-webfont.woff2") format("woff2"),
+//     url("../../app/fonts/suissebpintl-regular-webfont.woff") format("woff");
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: $font-suisse-bp;
+//   src: url("../../app/fonts/suissebpintl-ultralight-webfont.woff2")
+//       format("woff2"),
+//     url("../../app/fonts/suissebpintl-ultralight-webfont.woff") format("woff");
+//   font-weight: 200;
+//   font-style: normal;
+// }
