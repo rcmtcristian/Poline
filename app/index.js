@@ -2,18 +2,30 @@ import Home from './pages/home';
 import Collections from './pages/collections';
 import Detail from './pages/detail';
 import About from './pages/about';
+import Preloader from 'components/Preloader';
 import { each } from 'neo-async';
 
 class app {
   constructor() {
+    this.createPreloader();
     this.createContent();
     this.createPages();
     this.addLinkListeners();
+  }
+  createPreloader() {
+    this.preloader = new Preloader({});
+    this.preloader.once('completed', this.onPreloaded.bind(this));
   }
 
   createContent() {
     this.content = document.querySelector('.content');
     this.template = this.content.getAttribute('data-template');
+  }
+
+  onPreloaded() {
+    this.preloader.destroy();
+
+    this.page.show();
   }
 
   createPages() {
@@ -48,6 +60,7 @@ class app {
         this.page.create();
         this.page.show();
         history.pushState({}, '', href);
+        this.addLinkListeners();
       } else {
         console.log('We reached our target server, but it returned an error');
       }
@@ -56,15 +69,6 @@ class app {
 
   addLinkListeners() {
     this.links = document.querySelectorAll('a');
-
-    // this.links.forEach((link) => {
-    //   link.addEventListener('click', (event) => {
-    //     const { href } = link;
-    //     event.preventDefault();
-
-    //     this.onChange(href);
-    //   });
-    // });
 
     each(links, (link) => {
       link.onCLick = (event) => {
