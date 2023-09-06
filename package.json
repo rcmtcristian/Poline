@@ -39,6 +39,7 @@
     "media": "^0.2.1",
     "mini-css-extract-plugin": "^2.7.6",
     "postcss-loader": "^7.3.3",
+    "prefix": "^1.0.0",
     "raw-loader": "^4.0.2",
     "sass": "^1.64.2",
     "sass-loader": "^13.3.2",

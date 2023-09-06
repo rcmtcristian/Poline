@@ -42,30 +42,26 @@ export default class Preloader extends Component {
       element.src = element.getAttribute('data-src');
     });
   }
-
   onAssetLoaded(image) {
-    this.length += 1;
+    this.length++;
 
     const percent = this.length / this.elements.images.length;
 
     this.elements.numberText.innerHTML = `${Math.round(percent * 100)}%`;
-
     if (percent === 1) {
       this.onLoaded();
     }
   }
-
   onLoaded() {
     return new Promise((resolve) => {
       this.animateOut = GSAP.timeline({
         delay: 2,
       });
-
       this.animateOut.to(this.elements.titleSpans, {
         duration: 1.5,
         ease: 'expo.out',
         stagger: 0.1,
-        y: '100%',
+        y: '150%',
       });
 
       this.animateOut.to(
@@ -78,24 +74,21 @@ export default class Preloader extends Component {
         },
         '-=1.4'
       );
-
       this.animateOut.to(
         this.element,
         {
           duration: 1.5,
           ease: 'expo.out',
-          scale: 0,
+          scaleY: 0,
           transformOrigin: '100% 100%',
         },
         '-=1'
       );
-
       this.animateOut.call((_) => {
         this.emit('completed');
       });
     });
   }
-
   destroy() {
     this.element.parentNode.removeChild(this.element);
   }

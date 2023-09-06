@@ -10,7 +10,11 @@ class app {
     this.createPreloader();
     this.createContent();
     this.createPages();
+
+    this.addEventListeners();
     this.addLinkListeners();
+
+    this.update();
   }
   createPreloader() {
     this.preloader = new Preloader({});
@@ -21,13 +25,6 @@ class app {
     this.content = document.querySelector('.content');
     this.template = this.content.getAttribute('data-template');
   }
-
-  onPreloaded() {
-    this.preloader.destroy();
-
-    this.page.show();
-  }
-
   createPages() {
     this.pages = {
       home: new Home(),
@@ -43,6 +40,14 @@ class app {
     console.log(this.pages);
   }
 
+  onPreloaded() {
+    this.preloader.destroy();
+
+    this.onResize();
+
+    this.page.show();
+  }
+
   async onChange(href) {
     const request = new XMLHttpRequest();
     request.open('GET', href, true);
@@ -56,8 +61,10 @@ class app {
         this.page.hide();
         this.template = nextTemplate;
         this.content.setAttribute('data-template', this.template);
+
         this.page = this.pages[this.template];
         this.page.create();
+        this.onResize();
         this.page.show();
         history.pushState({}, '', href);
         this.addLinkListeners();
@@ -65,6 +72,32 @@ class app {
         console.log('We reached our target server, but it returned an error');
       }
     };
+  }
+
+  onResize() {
+    if (this.page && this.page.onResize) {
+      this.page.onResize();
+    }
+  }
+
+  /*
+   *  Loop
+   */
+
+  update() {
+    if (this.page && this.page.update) {
+      this.page.update();
+    }
+
+    this.frame = window.requestAnimationFrame(this.update.bind(this));
+  }
+
+  /*
+   * Listeners
+   */
+
+  addEventListeners() {
+    window.addEventListener('resize', this.onResize.bind(this));
   }
 
   addLinkListeners() {
