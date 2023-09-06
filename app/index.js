@@ -25,6 +25,7 @@ class app {
     this.content = document.querySelector('.content');
     this.template = this.content.getAttribute('data-template');
   }
+
   createPages() {
     this.pages = {
       home: new Home(),
@@ -35,9 +36,6 @@ class app {
 
     this.page = this.pages[this.template];
     this.page.create();
-    this.page.show();
-
-    console.log(this.pages);
   }
 
   onPreloaded() {
@@ -101,7 +99,7 @@ class app {
   }
 
   addLinkListeners() {
-    this.links = document.querySelectorAll('a');
+    const links = document.querySelectorAll('a');
 
     each(links, (link) => {
       link.onCLick = (event) => {
