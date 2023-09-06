@@ -16,6 +16,7 @@ class app {
 
     this.update();
   }
+
   createPreloader() {
     this.preloader = new Preloader({});
     this.preloader.once('completed', this.onPreloaded.bind(this));
@@ -28,15 +29,19 @@ class app {
 
   createPages() {
     this.pages = {
-      home: new Home(),
-      collections: new Collections(),
-      detail: new Detail(),
       about: new About(),
+      collections: new Collections(),
+      home: new Home(),
+      detail: new Detail(),
     };
 
     this.page = this.pages[this.template];
     this.page.create();
   }
+
+  /*
+   * Events
+   */
 
   onPreloaded() {
     this.preloader.destroy();
@@ -46,30 +51,37 @@ class app {
     this.page.show();
   }
 
-  async onChange(href) {
-    const request = new XMLHttpRequest();
-    request.open('GET', href, true);
-    request.onload = () => {
-      if (request.status >= 200 && request.status < 400) {
-        const response = request.responseText;
-        const parser = new DOMParser();
-        const text = parser.parseFromString(response, 'text/html');
-        const content = text.querySelector('.content');
-        const nextTemplate = content.getAttribute('data-template');
-        this.page.hide();
-        this.template = nextTemplate;
-        this.content.setAttribute('data-template', this.template);
+  async onChange(url) {
+    await this.page.hide();
 
-        this.page = this.pages[this.template];
-        this.page.create();
-        this.onResize();
-        this.page.show();
-        history.pushState({}, '', href);
-        this.addLinkListeners();
-      } else {
-        console.log('We reached our target server, but it returned an error');
-      }
-    };
+    const res = await window.fetch(url);
+    if (res.status >= 200 && res.status < 400) {
+      const html = await res.text();
+
+      const div = document.createElement('div');
+      div.innerHTML = html;
+
+      const divContent = div.querySelector('.content');
+      this.content.innerHTML = divContent.innerHTML;
+
+      this.template = divContent.getAttribute('data-template');
+
+      this.content.setAttribute('data-template', this.template);
+
+      this.page = this.pages[this.template];
+
+      this.page.create();
+
+      this.onResize();
+
+      this.page.show();
+      history.pushState({}, '', url);
+      this.addLinkListeners();
+    } else {
+      console.log(
+        `We reached our target server, but it returned the error ${res.status}`
+      );
+    }
   }
 
   onResize() {
@@ -102,14 +114,13 @@ class app {
     const links = document.querySelectorAll('a');
 
     each(links, (link) => {
-      link.onCLick = (event) => {
-        const { href } = link;
+      link.onclick = (event) => {
         event.preventDefault();
 
+        const { href } = link;
         this.onChange(href);
       };
     });
   }
 }
-
 new app();
