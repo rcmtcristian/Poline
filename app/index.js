@@ -3,18 +3,27 @@ import Collections from './pages/collections';
 import Detail from './pages/detail';
 import About from './pages/about';
 import Preloader from 'components/Preloader';
+import Navigation from 'components/Navigation';
 import { each } from 'neo-async';
 
 class app {
   constructor() {
-    this.createPreloader();
+    // this.createPreloader();
     this.createContent();
+    this.createPreloader();
+    this.createNavigation();
     this.createPages();
 
     this.addEventListeners();
     this.addLinkListeners();
 
     this.update();
+  }
+
+  createNavigation() {
+    this.navigation = new Navigation({
+      template: this.template,
+    });
   }
 
   createPreloader() {
@@ -65,6 +74,7 @@ class app {
       this.content.innerHTML = divContent.innerHTML;
 
       this.template = divContent.getAttribute('data-template');
+      this.navigation.onChange(this.template);
 
       this.content.setAttribute('data-template', this.template);
 
