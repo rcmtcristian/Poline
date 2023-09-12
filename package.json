@@ -575,7 +575,7 @@
     "typed-array-byte-offset": "^1.0.0",
     "typed-array-length": "^1.0.4",
     "typescript": "^5.1.6",
-    "ua-parser-js": "^1.0.35",
+    "ua-parser-js": "^1.0.36",
     "unbox-primitive": "^1.0.2",
     "unbzip2-stream": "^1.4.3",
     "unpipe": "^1.0.0",

@@ -8,6 +8,7 @@ const methodOverride = require('method-override');
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, 'public')));
+const UAParser = require('ua-parser-js');
 
 // const PrismicH = require("@prismicio/helpers");
 
@@ -17,6 +18,7 @@ const Prismic = require('prismic-javascript');
 const PrismicDOM = require('prismic-dom');
 
 const { application } = require('express');
+const { rest } = require('lodash');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -53,6 +55,14 @@ app.use((req, res, next) => {
   //     endpoint: process.env.PRISMIC_ENDPOINT,
   //     linkResolver: HandleLinkResolver,
   //   };
+
+  const ua = UAParser(req.headers['user-agent']);
+
+  res.locals.isDesktop = ua.device.type === undefined;
+  res.locals.isPhone = ua.device.type === 'mobile';
+  res.locals.isTablet = ua.device.type === 'tablet';
+
+  UAParser(req.headers['user-agent']).device.type === 'mobile';
 
   res.locals.Link = HandleLinkResolver;
   res.locals.PrismicDOM = PrismicDOM;

@@ -18,6 +18,7 @@ html(lang="en")
 
     meta(name="msapplication-TileColor" content="#f4d8cc")
     meta(name="theme-color" content="#f4d8cc")
+    body(class=isDesktop ? 'desktop' : isTablet ? "tablet" : isPhone ? 'phone' : "")
 
     //- meta(property="og:type" content="website")
     //- meta(property="og:title" content=meta.data.title)
