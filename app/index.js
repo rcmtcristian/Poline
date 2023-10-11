@@ -5,6 +5,7 @@ import About from './pages/about';
 import Preloader from 'components/Preloader';
 import Navigation from 'components/Navigation';
 import { each } from 'neo-async';
+import Canvas from 'components/Canvas';
 
 class app {
   constructor() {
@@ -13,7 +14,7 @@ class app {
     this.createPreloader();
     this.createNavigation();
     this.createPages();
-
+    this.createCanvas();
     this.addEventListeners();
     this.addLinkListeners();
 
@@ -24,6 +25,10 @@ class app {
     this.navigation = new Navigation({
       template: this.template,
     });
+  }
+
+  createCanvas() {
+    this.canvas = new Canvas();
   }
 
   createPreloader() {
@@ -107,6 +112,9 @@ class app {
   }
 
   onResize() {
+    if (this.canvas && this.canvas.onResize) {
+      this.canvas.onResize();
+    }
     if (this.page && this.page.onResize) {
       this.page.onResize();
     }
@@ -117,6 +125,9 @@ class app {
    */
 
   update() {
+    if (this.canvas && this.canvas.onResize) {
+      this.canvas.update();
+    }
     if (this.page && this.page.update) {
       this.page.update();
     }
