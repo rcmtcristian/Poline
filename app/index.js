@@ -120,6 +120,24 @@ class app {
     }
   }
 
+  onTouchDown(e) {
+    if (this.canvas && this.canvas.onTouchDown) {
+      this.canvas.onTouchDown(e);
+    }
+  }
+
+  onTouchMove(e) {
+    if (this.canvas && this.canvas.onTouchMove) {
+      this.canvas.onTouchMove(e);
+    }
+  }
+
+  onTouchUp(e) {
+    if (this.canvas && this.canvas.onTouchUp) {
+      this.canvas.onTouchUp(e);
+    }
+  }
+
   /*
    *  Loop
    */
@@ -140,7 +158,14 @@ class app {
    */
 
   addEventListeners() {
-    window.addEventListener('popstate', this.onPopState.bind(this));
+    window.addEventListener('mousedown', this.onTouchDown.bind(this));
+    window.addEventListener('mousemove', this.onTouchMove.bind(this));
+    window.addEventListener('mouseup', this.onTouchUp.bind(this));
+
+    window.addEventListener('touchstart', this.onTouchDown.bind(this));
+    window.addEventListener('touchmove', this.onTouchMove.bind(this));
+    window.addEventListener('touchend', this.onTouchUp.bind(this));
+
     window.addEventListener('resize', this.onResize.bind(this));
   }
 
