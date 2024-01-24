@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/whizzbbig/Webpack-boilerplate.git"
+    "url": "https://github.com/rcmtcristian/Poline"
   },
   "keywords": [],
   "author": "whizzbbig",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/whizzbbig/Webpack-boilerplate/issues"
+    "url": "https://github.com/rcmtcristian/Poline/issues"
   },
-  "homepage": "https://github.com/whizzbbig/Webpack-boilerplate#readme",
+  "homepage": "https://github.com/rcmtcristian/Poline#readme",
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "babel-loader": "^8.2.2",
