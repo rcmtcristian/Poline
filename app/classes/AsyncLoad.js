@@ -12,9 +12,9 @@ export default class AsyncLoad extends Component {
         if (entry.isIntersecting) {
           if (!this.element.src) {
             this.element.src = this.element.getAttribute('data-src');
-            this.element.onload = (_) => {
-              this.element.classList.add('loaded');
-            };
+            this.element.onload = _ => {
+                this.element.classList.add('loaded');
+            }
           }
         }
       });

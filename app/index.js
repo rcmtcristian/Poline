@@ -1,22 +1,34 @@
-import Home from './pages/home';
-import Collections from './pages/collections';
-import Detail from './pages/detail';
-import About from './pages/about';
-import Preloader from 'components/Preloader';
-import Navigation from 'components/Navigation';
-import { each } from 'neo-async';
-import Canvas from 'components/Canvas';
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-new */
 
-class app {
+import NormalizeWheel from 'normalize-wheel';
+
+import each from 'lodash/each';
+
+import Canvas from 'components/Canvas';
+import Detection from 'classes/Detection';
+
+import Navigation from 'components/Navigation';
+import Preloader from 'components/Preloader';
+
+import About from 'pages/About';
+import Collections from 'pages/Collections';
+import Home from 'pages/Home';
+import Detail from 'pages/Detail';
+
+class App {
   constructor() {
-    // this.createPreloader();
     this.createContent();
+
+    this.createCanvas();
     this.createPreloader();
     this.createNavigation();
     this.createPages();
-    this.createCanvas();
+
     this.addEventListeners();
     this.addLinkListeners();
+
+    this.onResize();
 
     this.update();
   }
@@ -27,13 +39,18 @@ class app {
     });
   }
 
-  createCanvas() {
-    this.canvas = new Canvas();
+  createPreloader() {
+    this.preloader = new Preloader({
+      canvas: this.canvas,
+    });
+
+    this.preloader.once('completed', this.onPreloaded.bind(this));
   }
 
-  createPreloader() {
-    this.preloader = new Preloader({});
-    this.preloader.once('completed', this.onPreloaded.bind(this));
+  createCanvas() {
+    this.canvas = new Canvas({
+      template: this.template,
+    });
   }
 
   createContent() {
@@ -58,9 +75,9 @@ class app {
    */
 
   onPreloaded() {
-    this.preloader.destroy();
-
     this.onResize();
+
+    this.canvas.onPreloaded();
 
     this.page.show();
   }
@@ -73,9 +90,12 @@ class app {
   }
 
   async onChange({ url, push = true }) {
+    this.canvas.onChangeStart(this.template, url);
+
     await this.page.hide();
 
     const res = await window.fetch(url);
+
     if (res.status === 200) {
       const html = await res.text();
       const div = document.createElement('div');
@@ -87,16 +107,17 @@ class app {
       div.innerHTML = html;
 
       const divContent = div.querySelector('.content');
-      this.content.innerHTML = divContent.innerHTML;
 
       this.template = divContent.getAttribute('data-template');
 
       this.navigation.onChange(this.template);
 
       this.content.setAttribute('data-template', this.template);
+      this.content.innerHTML = divContent.innerHTML;
+
+      this.canvas.onChangeEnd(this.template);
 
       this.page = this.pages[this.template];
-
       this.page.create();
 
       this.onResize();
@@ -105,19 +126,20 @@ class app {
 
       this.addLinkListeners();
     } else {
-      console.log(
-        `We reached our target server, but it returned the error ${res.status}`
-      );
+      console.error(`response status: ${res.status}`);
     }
   }
 
   onResize() {
-    if (this.canvas && this.canvas.onResize) {
-      this.canvas.onResize();
-    }
     if (this.page && this.page.onResize) {
       this.page.onResize();
     }
+
+    window.requestAnimationFrame((_) => {
+      if (this.canvas && this.canvas.onResize) {
+        this.canvas.onResize();
+      }
+    });
   }
 
   onTouchDown(e) {
@@ -138,16 +160,29 @@ class app {
     }
   }
 
+  onWheel(e) {
+    const normalizedWheel = NormalizeWheel(e);
+
+    if (this.canvas && this.canvas.onWheel) {
+      this.canvas.onWheel(normalizedWheel);
+    }
+
+    if (this.page && this.page.onWheel) {
+      this.page.onWheel(normalizedWheel);
+    }
+  }
+
   /*
-   *  Loop
+   *  LOop
    */
 
   update() {
-    if (this.canvas && this.canvas.onResize) {
-      this.canvas.update();
-    }
     if (this.page && this.page.update) {
       this.page.update();
+    }
+
+    if (this.canvas && this.canvas.update) {
+      this.canvas.update(this.page.scroll);
     }
 
     this.frame = window.requestAnimationFrame(this.update.bind(this));
@@ -158,6 +193,8 @@ class app {
    */
 
   addEventListeners() {
+    window.addEventListener('mousewheel', this.onWheel.bind(this));
+
     window.addEventListener('mousedown', this.onTouchDown.bind(this));
     window.addEventListener('mousemove', this.onTouchMove.bind(this));
     window.addEventListener('mouseup', this.onTouchUp.bind(this));
@@ -182,4 +219,5 @@ class app {
     });
   }
 }
-new app();
+
+new App();

@@ -16,14 +16,14 @@ export default class Home extends Page {
   create() {
     super.create();
 
-    this.link = new Button({
-      element: this.elements.link,
-    });
+    this.link = new Button ({
+      element: this.elements.link
+    })
   }
 
   destroy() {
-    super.destroy();
+    super.destroy()
 
-    this.link.removeEventListeners();
+    this.link.removeEventListeners()
   }
 }
