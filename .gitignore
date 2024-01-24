@@ -13,3 +13,5 @@ public/
 
 # global rules
 .DS_Store
+
+.vercel
